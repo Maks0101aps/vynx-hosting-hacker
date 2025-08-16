@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  couchdb:
+    image: couchdb:3.2
+    container_name: vynx_couchdb
+    ports:
+      - "5984:5984"
+    environment:
+      COUCHDB_USER: admin
+      COUCHDB_PASSWORD: password
+    volumes:
+      - couchdb_data:/opt/couchdb/data
+    networks:
+      - vynx_network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - vynx_network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      - COUCHDB_URL=http://couchdb:5984
+      - COUCHDB_NAME=vynx_hosting
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=password
+    depends_on:
+      - couchdb
+    networks:
+      - vynx_network
+
+volumes:
+  couchdb_data:
+
+networks:
+  vynx_network:
+    driver: bridge

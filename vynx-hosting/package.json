@@ -1,0 +1,24 @@
+{
+  "name": "vynx-hosting",
+  "version": "1.0.0",
+  "description": "MVP Website for VYNX Hosting Company with Hacker Theme",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run frontend\" \"npm run backend\"",
+    "frontend": "cd frontend && npm start",
+    "backend": "cd backend && npm run start:dev",
+    "build": "cd frontend && npm run build"
+  },
+  "keywords": [
+    "hosting",
+    "vynx",
+    "hacker",
+    "react",
+    "nest"
+  ],
+  "author": "VYNX Hosting",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  }
+}
